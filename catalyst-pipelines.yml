@@ -1,0 +1,24 @@
+version: 1
+jobs:
+  hello:
+    steps:
+    - cd photo-store-app
+    - npm run build
+    - cd ..
+    - node ./scripts/filesHelper.js -c ./server/ ./build/server/
+    - node ./scripts/filesHelper.js -c ./photo-store-app/build/ ./build/photo-store-app/
+
+  world:
+    steps:
+      - echo "World"
+  hello-world:
+    steps:
+      - echo "Hello World!"
+stages:
+  - name: build
+    jobs:
+      - - hello
+        - world
+      - hello-world
+variables:
+  var_test: Run
