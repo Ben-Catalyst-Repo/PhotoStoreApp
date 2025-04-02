@@ -11,10 +11,9 @@ jobs:
 
     artifacts:
         upload:
-            - type: zip
-              regex:
-                - /build/**
+            - type: file
               name: appsail.zip
+              file: /build/**
               location: stratus://<< Test >>/
 
   world:
