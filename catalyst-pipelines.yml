@@ -3,6 +3,7 @@ jobs:
   hello:
     steps:
     - cd photo-store-app
+    - npm install
     - npm run build
     - cd ..
     - node ./scripts/filesHelper.js -c ./server/ ./build/server/
