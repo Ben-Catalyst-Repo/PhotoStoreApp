@@ -1,36 +1,29 @@
 version: 1
 jobs:
-  hello:
+  install:
     steps:
     - cd photo-store-app
     - npm install
-    - npm run build
-    - cd ..
-    - node ./scripts/filesHelper.js -c ./server/ ./build/server/
-    - node ./scripts/filesHelper.js -c ./photo-store-app/build/ ./build/photo-store-app/
-    - ls
-    - npm install -g zcatalyst-cli@beta
-    - catalyst deploy
 
-    artifacts:
-        upload:
-        - type: zip
-          regex:
-            - /catalyst/build/**
-          name: buildtest
-          location: stratus://pipeline-test/
+  compile:
+    steps:
+        - npm run build
+  copy-files:
+    steps:
+        - cd ..
+        - node ./scripts/filesHelper.js -c ./server/ ./build/server/
+        - node ./scripts/filesHelper.js -c ./photo-store-app/build/ ./build/photo-store-app/
 
-  world:
+  deploy:
     steps:
-      - echo "World"
-  hello-world:
-    steps:
-      - echo "Hello World!"
+        - npm install -g zcatalyst-cli@beta
+        - catalyst deploy
 stages:
   - name: build
     jobs:
-      - - hello
-        - world
-      - hello-world
+        - install
+        - compile
+        - copy-files
+        - deploy
 variables:
   var_test: Run
