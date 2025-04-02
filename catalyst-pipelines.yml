@@ -15,7 +15,7 @@ jobs:
             - type: file
               name: appsail
               file: build
-              location: stratus://<<pipeline-test>>/
+              location: stratus://pipeline-test/
 
   world:
     steps:
