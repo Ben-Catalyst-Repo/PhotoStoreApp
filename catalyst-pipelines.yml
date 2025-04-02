@@ -9,6 +9,14 @@ jobs:
     - node ./scripts/filesHelper.js -c ./server/ ./build/server/
     - node ./scripts/filesHelper.js -c ./photo-store-app/build/ ./build/photo-store-app/
 
+    artifacts:
+        upload:
+            - type: zip
+              regex:
+                - /build/**
+              name: appsail.zip
+              location: stratus://<< Test >>/
+
   world:
     steps:
       - echo "World"
