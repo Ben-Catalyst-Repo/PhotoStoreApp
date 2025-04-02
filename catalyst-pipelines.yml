@@ -12,10 +12,11 @@ jobs:
 
     artifacts:
         upload:
-            - type: file
-              name: appsail
-              file: build
-              location: stratus://pipeline-test/
+        - type: zip
+          regex:
+            - /catalyst/**
+          name: build
+          location: stratus://pipeline-test/
 
   world:
     steps:
