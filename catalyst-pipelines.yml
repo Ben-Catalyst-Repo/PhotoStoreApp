@@ -13,9 +13,9 @@ jobs:
     artifacts:
         upload:
             - type: file
-              name: appsail.zip
-              file: ./build
-              location: stratus://<< Test >>/
+              name: appsail
+              file: build
+              location: stratus://<<pipeline-test>>/
 
   world:
     steps:
