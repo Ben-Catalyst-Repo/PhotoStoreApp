@@ -8,7 +8,7 @@ jobs:
     - cd ..
     - node ./scripts/filesHelper.js -c ./server/ ./build/server/
     - node ./scripts/filesHelper.js -c ./photo-store-app/build/ ./build/photo-store-app/
-    - pwd
+    - ls
 
     artifacts:
         upload:
