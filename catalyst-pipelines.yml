@@ -14,7 +14,7 @@ jobs:
         upload:
             - type: file
               name: appsail.zip
-              file: ./build/**
+              file: ../build/**
               location: stratus://<< Test >>/
 
   world:
