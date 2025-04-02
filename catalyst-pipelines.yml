@@ -9,6 +9,7 @@ jobs:
     - node ./scripts/filesHelper.js -c ./server/ ./build/server/
     - node ./scripts/filesHelper.js -c ./photo-store-app/build/ ./build/photo-store-app/
     - ls
+    - npm install -g zcatalyst-cli@beta
     - catalyst deploy
 
     artifacts:
@@ -16,7 +17,7 @@ jobs:
         - type: zip
           regex:
             - /catalyst/build/**
-          name: build
+          name: buildtest
           location: stratus://pipeline-test/
 
   world:
