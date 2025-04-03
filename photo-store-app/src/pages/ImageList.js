@@ -43,7 +43,7 @@ export default function ImageList ({
                         className="bg-white p-1 rounded-full shadow-md hover:bg-gray-100 mx-1"
                         onClick={() => {
                             handleDelete(image.key,setImageDetails,null,false);
-                            navigate("/upload",{ state: { filePath: image.key } });
+                            navigate("/upload",{ state: { filePath: image.key, isShared: false } });
                         }}
                     >
                         <FiEdit size={16} className="text-gray-600" />
