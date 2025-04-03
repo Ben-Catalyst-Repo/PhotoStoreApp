@@ -16,6 +16,8 @@ export default function Upload ({ userId })  {
     const pathParts = filePath ? filePath.split("/") : null;
     const fileName = pathParts ? pathParts.pop() : null; 
 
+    const isFromShared = location.state ? location.state.isShared : null;
+
     console.log("FILEPATH +++++++ "+filePath);
     console.log("FileName TBU: "+fileName);
     console.log("USERId: "+userId);
@@ -146,7 +148,16 @@ export default function Upload ({ userId })  {
                 }
                 );
 
-                navigate("/sharedImages");
+                if(isFromShared == null || isFromShared == false)
+                {
+                    navigate("/");
+                }
+                else
+                {
+                    navigate("/sharedImages");
+                }
+
+                //navigate("/sharedImages");
             }
             
             //setFile(null);
