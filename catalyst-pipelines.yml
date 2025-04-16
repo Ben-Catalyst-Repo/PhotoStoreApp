@@ -6,6 +6,8 @@ jobs:
     - npm install
     - npm run build
     - cd ..
+  copy:
+    steps:
     - cd server
     - npm install
     - cd ..
