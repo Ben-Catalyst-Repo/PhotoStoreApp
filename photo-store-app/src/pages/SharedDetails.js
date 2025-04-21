@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchSharedDetails,handleUpdateSharedDetails } from "../service/ImageService";
+import { fetchSharedDetails, handleUpdateSharedDetails } from "../service/ImageService";
 
 export default function SharedDetails({ userId }) {
     const [details, setDetails] = useState([]);
@@ -9,49 +9,9 @@ export default function SharedDetails({ userId }) {
     const rowsPerPage = 10;
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     fetchDetails();
-    // }, []);
-
     useEffect(() => {
-        fetchSharedDetails(userId,setDetails,setLoading);
+        fetchSharedDetails(userId, setDetails, setLoading);
     }, []);
-
-    // const fetchDetails = async () => {
-    //     try {
-    //         const response = await fetch(
-    //             // `https://photostore-10096436359.development.catalystappsail.com/getSharedDetails?id=${userId}`
-    //             `/getSharedDetails?id=${userId}`
-    //         );
-    //         const data = await response.json();
-    //         setDetails(data);
-    //         setLoading(false);
-    //     } catch (error) {
-    //         console.error("Error fetching details:", error);
-    //         setLoading(false);
-    //     }
-    // };
-
-    // const handleUpdate = async (index) => {
-    //     const updatedItem = details[index];
-    //     try {
-    //         const response = await fetch(
-    //             // "https://photostore-10096436359.development.catalystappsail.com/updateSharedDetails",
-    //             "/updateSharedDetails",
-    //             {
-    //                 method: "PATCH",
-    //                 headers: { "Content-Type": "application/json" },
-    //                 body: JSON.stringify(updatedItem),
-    //             }
-    //         );
-    //         await response.json();
-    //         toast.success("Details Updated Successfully", { theme: "colored" });
-    //         navigate(0);
-    //     } catch (error) {
-    //         console.error("Error updating details:", error);
-    //         toast.error("Error updating details", { theme: "colored" });
-    //     }
-    // };
 
     const handleChange = (index, key, value) => {
         const updatedData = [...details];
@@ -86,11 +46,11 @@ export default function SharedDetails({ userId }) {
                             {currentRows.map((item, index) => (
                                 <tr key={index} className="text-center">
                                     <td className="border text-white border-white px-4 py-2">{item.UserName}</td>
-                                    
+
                                     <td className="border text-white border-white px-4 py-2">
                                         {item.BucketPath.split("/").pop()}
                                     </td>
-                                    
+
                                     <td className="border text-white border-white px-4 py-2">
                                         <select
                                             value={item.IsUpdate}
@@ -106,34 +66,32 @@ export default function SharedDetails({ userId }) {
 
                                     <td className="border p-2">
                                         <label className="flex items-center justify-center cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            className="sr-only"
-                                            checked={item.RevokeAccess === "yes"}
-                                            onChange={() =>
-                                                handleChange(index, "RevokeAccess", item.RevokeAccess === "yes" ? "no" : "yes")
-                                            }
-                                        />
-                                        <div
-                                            className={`relative w-12 h-6 rounded-full transition ${
-                                                item.RevokeAccess === "yes" ? "bg-red-500" : "bg-gray-300"
-                                            }`}
-                                        >
+                                            <input
+                                                type="checkbox"
+                                                className="sr-only"
+                                                checked={item.RevokeAccess === "yes"}
+                                                onChange={() =>
+                                                    handleChange(index, "RevokeAccess", item.RevokeAccess === "yes" ? "no" : "yes")
+                                                }
+                                            />
                                             <div
-                                                className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md transition-transform ${
-                                                    item.RevokeAccess === "yes" ? "translate-x-6" : "translate-x-0"
-                                                }`}
-                                            ></div>
-                                        </div>
-                                        <span className="ml-2 text-sm font-medium">
-                                            {item.RevokeAccess === "yes" ? "Yes" : "No"}
-                                        </span>
-                                    </label>
+                                                className={`relative w-12 h-6 rounded-full transition ${item.RevokeAccess === "yes" ? "bg-red-500" : "bg-gray-300"
+                                                    }`}
+                                            >
+                                                <div
+                                                    className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md transition-transform ${item.RevokeAccess === "yes" ? "translate-x-6" : "translate-x-0"
+                                                        }`}
+                                                ></div>
+                                            </div>
+                                            <span className="ml-2 text-sm font-medium">
+                                                {item.RevokeAccess === "yes" ? "Yes" : "No"}
+                                            </span>
+                                        </label>
                                     </td>
 
                                     <td className="border border-white px-4 py-2">
                                         <button
-                                            onClick={() => handleUpdateSharedDetails(details[index],navigate)}
+                                            onClick={() => handleUpdateSharedDetails(details[index], navigate)}
                                             className="bg-blue-700 text-white px-4 py-1 rounded hover:bg-blue-900"
                                         >
                                             Update

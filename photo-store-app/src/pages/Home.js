@@ -16,7 +16,7 @@ export default function Home({ userId }) {
     const [openShareIndex, setOpenShareIndex] = useState(null);
 
     const [selectedImage, setSelectedImage] = useState(null);
-    const [viewMode, setViewMode] = useState("grid"); // Track view mode (grid/list)
+    const [viewMode, setViewMode] = useState("grid"); 
 
     const imagesPerPage = 9;
     
@@ -44,17 +44,6 @@ export default function Home({ userId }) {
         };
     }, [openShareIndex, selectedUserIndex,openMenuIndex]);
 
-    // const fetchUsers = async () => {
-    //         try {
-    //             // const response = await fetch("https://photostore-10096436359.development.catalystappsail.com/getAllUsers");
-    //             const response = await fetch("/getAllUsers");
-    //             const data = await response.json();
-    //             setUsers(data);
-    //         } catch (error) {
-    //             console.error("Error fetching users:", error);
-    //         }
-    //     };
-    
         const handleShareClick = async (index, e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -75,39 +64,6 @@ export default function Home({ userId }) {
             setSelectedUserIndex(selectedUserIndex === index ? null : index);
         };
     
-        
-    
-        // const handleShareAction = async (name, id, path, action) => {
-        //     try {
-        //         // const response = await fetch(`https://photostore-10096436359.development.catalystappsail.com/shareDetails`, {
-        //             const response = await fetch(`/shareDetails`, {
-        //             method: "POST",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //             },
-        //             body: JSON.stringify({ userName: name, imagePath: path, zuid: id, isUpdate: action, sharedBy: userId }),
-        //         });
-    
-        //         const data = await response.json();
-        //         console.log("RES: "+JSON.stringify(data));
-        //         if(data.message == "Access Provided")
-        //         {
-        //             toast.success("Image Shared Successfully",{
-        //                             theme:"colored"
-        //                         });
-        //         }
-        //         else
-        //         {
-        //             toast.error(data.message,{
-        //                             theme:"colored"
-        //                         });
-        //         }
-        //         console.log("API Response:", data);
-        //     } catch (error) {
-        //         console.error("Error calling API:", error);
-        //     }
-        // };
-    
         const openPreview = (imageUrl) => {
             setSelectedImage(imageUrl);
         };
@@ -119,14 +75,6 @@ export default function Home({ userId }) {
         const indexOfLastImage = currentPage * imagesPerPage;
         const indexOfFirstImage = indexOfLastImage - imagesPerPage;
         const currentImages = imageDetails.slice(indexOfFirstImage, indexOfLastImage);
-        const totalPages = Math.ceil(imageDetails.length / imagesPerPage);
-        
-        console.log("indexOfLastImage: "+indexOfLastImage);
-        console.log("indexOfFirstImage: "+indexOfFirstImage);
-        console.log("currentImages: "+currentImages);
-        console.log("totalPages: "+totalPages);
-        console.log("CONTENTS "+imageDetails)
-        console.log("CONTENTS ------- "+JSON.stringify(imageDetails));
     
         const nextPage = () => {
             if (indexOfLastImage < imageDetails.length) {

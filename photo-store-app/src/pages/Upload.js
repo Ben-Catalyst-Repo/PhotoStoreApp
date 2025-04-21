@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 
 
-export default function Upload ({ userId })  {
+export default function Upload({ userId }) {
     const [file, setFile] = useState(null);
     const [error, setError] = useState("");
     const [isUploading, setIsUploading] = useState(false);
@@ -12,22 +12,13 @@ export default function Upload ({ userId })  {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const zuid = userId;
+
     const filePath = location.state ? location.state.filePath : null;
     const pathParts = filePath ? filePath.split("/") : null;
-    const fileName = pathParts ? pathParts.pop() : null; 
+    const fileName = pathParts ? pathParts.pop() : null;
 
     const isFromShared = location.state ? location.state.isShared : null;
-
-    console.log("FILEPATH +++++++ "+filePath);
-    console.log("FileName TBU: "+fileName);
-    console.log("USERId: "+userId);
-    const zuid = userId;
-    console.log("ZUID: "+userId);
-    debugger;
-    console.log("ENV:"+window.catalyst.getCatalystEnv("REACT_APP_API_URL"));
-    console.log("TEST: "+process.env["REACT_APP_API_URL"]);
-    console.log("TT: "+process.env.REACT_APP_API_URL);
-
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -49,22 +40,20 @@ export default function Upload ({ userId })  {
             setError("Please select a valid file.");
             return;
         }
-        
+
         try {
             setIsUploading(true);
             const stratus = window.catalyst.stratus;
             const bucket = stratus.bucket("photo-store-app");
-            
-            if(fileName == null)
-            {
+
+            if (fileName == null) {
                 const checkObjectAvailability = await bucket.headObject(`photos/${zuid}/${file.name}`);
-                
-                console.log("Availability: "+JSON.stringify(checkObjectAvailability));
-                if(checkObjectAvailability.content == true)
-                {
+
+                console.log("Availability: " + JSON.stringify(checkObjectAvailability));
+                if (checkObjectAvailability.content == true) {
                     toast.error(`Already file named ${file.name} is present`, {
                         theme: "colored"
-                        }
+                    }
                     );
                     setIsUploading(false);
                     setFile(null);
@@ -72,110 +61,83 @@ export default function Upload ({ userId })  {
                 }
             }
 
-            if(fileName == null)
-            {
+            if (fileName == null) {
                 const putObject = await bucket.putObject(`photos/${zuid}/${file.name}`, file);
-                const response = await putObject.start(); // Start the upload process
+                const response = await putObject.start();
                 console.log(JSON.stringify(response));
             }
-            else
-            {
+            else {
                 console.log("FROM UPDATE");
-                if(location.state == null || location.state.isShared == false)
-                {
-                const putObject = await bucket.putObject(`photos/${zuid}/${fileName}`, file);
-                const response = await putObject.start(); // Start the upload process
-                console.log("Normal Upload response: "+JSON.stringify(response));
+                if (location.state == null || location.state.isShared == false) {
+                    const putObject = await bucket.putObject(`photos/${zuid}/${fileName}`, file);
+                    const response = await putObject.start();
+                    console.log("Normal Upload response: " + JSON.stringify(response));
                 }
 
-                else
-                {
+                else {
                     const putObject = await bucket.putObject(`${filePath}`, file);
-                    const response = await putObject.start(); // Start the upload process
-                    console.log("Shared upload response: "+JSON.stringify(response));
+                    const response = await putObject.start();
+                    console.log("Shared upload response: " + JSON.stringify(response));
                 }
             }
-            
-            //const response = await putObject.start(); // Start the upload process
 
             const formData = new FormData();
             formData.append("image", file);
 
-            if(location.state != null && location.state.isShared == true)
-            {
+            if (location.state != null && location.state.isShared == true) {
                 const t = filePath.split("/")[1];
-                console.log("Shared zuid: "+t);
-                formData.append("id",t);
+                console.log("Shared zuid: " + t);
+                formData.append("id", t);
             }
-            else
-            {
-                formData.append("id",zuid);
-            }
-            
-            if(fileName != null)
-            {
-                formData.append("fileName",fileName);
+            else {
+                formData.append("id", zuid);
             }
 
-            try 
-            {
+            if (fileName != null) {
+                formData.append("fileName", fileName);
+            }
+
+            try {
                 console.log("Thumbnail API Started");
-                // const response = await axios.post("https://photostore-10096436359.development.catalystappsail.com/convertToThumbnailAndUpload", formData);
                 const response = await axios.post("/convertToThumbnailAndUpload", formData);
-                //setThumbnail(response.data.thumbnailUrl);
-                //console.log("STORE: "+response.data.thumbnailUrl);
-                console.log("Response: "+JSON.stringify(response));
-                //console.log("Thumbnail URL: "+thumbnail);
-            } 
-            catch (error) 
-            {
+                console.log("Response: " + JSON.stringify(response));
+            }
+            catch (error) {
                 console.error("Thumbnail Upload failed", error);
             }
-            
-            //alert(`File uploaded: ${file.name}`);
-            if(fileName == null)
-            {
+
+            if (fileName == null) {
                 toast.success(`File uploaded: ${file.name}`, {
                     theme: "colored"
                 }
                 );
                 navigate("/");
             }
-            else
-            {
+            else {
                 toast.success(`File updated: ${fileName}`, {
                     theme: "colored"
                 }
                 );
 
-                if(isFromShared == null || isFromShared == false)
-                {
+                if (isFromShared == null || isFromShared == false) {
                     navigate("/");
                 }
-                else
-                {
+                else {
                     navigate("/sharedImages");
                 }
-
-                //navigate("/sharedImages");
             }
-            
-            //setFile(null);
-        } 
-        catch (error) 
-        {
+        }
+        catch (error) {
             console.error("Error during upload:", error);
-            
-            toast.error("Error uploading the file. Please try again.",{
-                theme:"colored"
+
+            toast.error("Error uploading the file. Please try again.", {
+                theme: "colored"
             });
-            
-        } 
-        finally 
-        {
+
+        }
+        finally {
             setIsUploading(false);
             setFile(null);
-            //window.location.reload();
         }
     };
 
@@ -196,13 +158,12 @@ export default function Upload ({ userId })  {
                             accept="image/png, image/jpg, image/jpeg"
                         />
                     </div>
-                    
+
                     <button
                         type="submit"
                         disabled={isUploading}
-                        className={`px-4 py-2 text-white rounded w-full ${
-                            isUploading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-                        }`}>
+                        className={`px-4 py-2 text-white rounded w-full ${isUploading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+                            }`}>
                         {isUploading ? "Uploading..." : "Upload"}
                     </button>
                 </form>

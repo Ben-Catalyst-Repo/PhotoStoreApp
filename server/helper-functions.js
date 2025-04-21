@@ -77,16 +77,12 @@ async function listSharedPaginatedObjects(bucket, prefix, zcql,zuid) {
             allSharedImages.push(result);
         }
 
-        //allSharedImages.push(items)
         console.log("ALL Images: "+allSharedImages);
         return allSharedImages;
-
-        //listMyPaginatedObjects(bucket,prefix)
     }
     catch(error)
     {
         console.error("Error Occurred..."+error.message);
-        //throw { message: "Error in uploading", code: 500 };
     }
 
 }
