@@ -42,9 +42,9 @@ app.post("/convertToThumbnailAndUpload", upload.single("image"), async (req, res
     let result;
     
     await helperFunctions.uploadToStratus(bucket,inputPath,thumbnailPath,thumbnailName)
-    .then(res => {
+    .then(resp => {
         console.log("Success");
-        result = res;
+        result = resp;
         res.json({ message: "Thumbnail created and uploaded successfully" });
     })
     .catch(error => {
