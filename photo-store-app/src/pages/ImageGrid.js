@@ -107,7 +107,7 @@ export default function ImageGrid({
             {openMenuIndex === index && (
               <div className="absolute bottom-10 right-2 text-blue-600 bg-white border rounded shadow-lg w-32 text-sm z-50">
 
-                <button
+                {/* <button
                   className="block w-full px-4 py-2 text-left hover:bg-gray-100"
                   onClick={(e) => {
                     e.preventDefault();
@@ -117,7 +117,7 @@ export default function ImageGrid({
                   }}
                 >
                   Update
-                </button>
+                </button> */}
 
                 <button
                   className="block w-full px-4 py-2 text-left hover:bg-gray-100"

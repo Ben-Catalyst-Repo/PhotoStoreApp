@@ -28,7 +28,7 @@ export default function SharedImageList(
                         <FiEye size={16} className="text-gray-600" />
                     </button>
 
-                    {image.isEditAccess && (
+                    {/* {image.isEditAccess && (
                         <button
                             className="bg-white p-1 rounded-full shadow-md hover:bg-gray-100 mx-1"
                             onClick={() => {
@@ -38,7 +38,7 @@ export default function SharedImageList(
                         >
                             <FiEdit size={16} className="text-gray-600" />
                         </button>
-                    )}
+                    )} */}
 
                     <button
                         className="bg-white p-1 rounded-full shadow-md hover:bg-gray-100 mx-1"

@@ -38,7 +38,7 @@ export default function ImageList({
                         <FiEye size={16} className="text-gray-600" />
                     </button>
 
-                    <button
+                    {/* <button
                         className="bg-white p-1 rounded-full shadow-md hover:bg-gray-100 mx-1"
                         onClick={() => {
                             handleDelete(image.key, setImageDetails, null, false);
@@ -46,7 +46,7 @@ export default function ImageList({
                         }}
                     >
                         <FiEdit size={16} className="text-gray-600" />
-                    </button>
+                    </button> */}
 
                     <button
                         className="bg-white p-1 rounded-full shadow-md hover:bg-gray-100 mx-1"

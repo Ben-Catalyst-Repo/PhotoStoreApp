@@ -34,7 +34,7 @@ export default function SharedImageGrid({ currentImages,
                             <div className="absolute bottom-10 right-2 text-blue-600 bg-white border rounded shadow-lg w-32 text-sm z-50">
                                 {image.isEditAccess && (
                                     <>
-                                        <button
+                                        {/* <button
                                             className="block w-full px-4 py-2 text-left hover:bg-gray-100"
                                             onClick={(e) => {
                                                 e.preventDefault();
@@ -44,7 +44,7 @@ export default function SharedImageGrid({ currentImages,
                                             }}
                                         >
                                             Update
-                                        </button>
+                                        </button> */}
 
                                         <button
                                             className="block w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100"

@@ -23,18 +23,13 @@ app.get('/', function (req, res) {
 app.post("/convertToThumbnailAndUpload", upload.single("image"), async (req, res) => {
   try 
   {
-    const obj = catalyst.initialize(req);
+    const obj = catalyst.initialize(req, { scope: 'admin'});
     const stratus = obj.stratus();
     const bucket = stratus.bucket("photo-store-app");
     
-    console.log("Original File name: "+req.file.originalname);
+    console.log("File name: "+req.file.originalname);
     
-    const fileName = req.body.fileName;
-    console.log("File Name from request param: "+fileName);
-
-    const thumbnailName = fileName == null 
-        ? req.file.originalname.substring(0, req.file.originalname.lastIndexOf(".")) 
-        : fileName.substring(0, fileName.lastIndexOf("."));
+    const thumbnailName = req.file.originalname.substring(0, req.file.originalname.lastIndexOf(".")) ;
     
     const inputPath = req.file.path; 
     console.log("Input File Path: "+inputPath);
@@ -50,21 +45,17 @@ app.post("/convertToThumbnailAndUpload", upload.single("image"), async (req, res
     .then(res => {
         console.log("Success");
         result = res;
+        res.json({ message: "Thumbnail created and uploaded successfully" });
     })
     .catch(error => {
         console.error("Error: "+JSON.stringify(error.message));
         res.status(500).json({message: "Error Occurred"});
         return;
     })
-
-    console.log("Upload Result: "+JSON.stringify(result));
-    
-    res.json({ message: "Thumbnail created and uploaded successfully" });
   } 
   catch (error) 
   {
       console.log("Error in convertToThumbnailAndUpload API: "+error.message);
-      res.status(500).json({ error: "Failed to process image"});
   }
 });
 
@@ -80,9 +71,9 @@ app.get("/fetchAllImages", async (req,res) => {
       const objPath = "photos/"+zuid;
       const stratus = obj.stratus();
       const bucket = stratus.bucket("photo-store-app");
-      const zcql = obj.zcql();
       var resp = await helperFunctions.listMyPaginatedObjects(bucket,objPath);
       console.log("fetchAllImages API ENDED...");
+      res.setHeader("X-Frame-Options", "SAMEORIGIN");
       res.json(resp);
   }
   catch(error)

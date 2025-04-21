@@ -58,7 +58,7 @@ export const handleDelete = async (imageKey, setImageDetails, setOpenMenuIndex, 
 
         await bucket.deleteObject(thumbnailPath);
 
-        if (isDelete) {
+        //if (isDelete) {
             var zcql = window.catalyst.ZCatalystQL;
 
             var query = `DELETE FROM ImageShareDetails WHERE BucketPath = '${imageKey}'`;
@@ -75,17 +75,17 @@ export const handleDelete = async (imageKey, setImageDetails, setOpenMenuIndex, 
                 });
 
             setImageDetails(prev => prev.filter(image => image.key !== imageKey));
-        }
+        //}
 
         if (setOpenMenuIndex != null) {
             setOpenMenuIndex(null);
         }
 
-        if (isDelete) {
+        //if (isDelete) {
             toast.success("Image Deleted Successfully", {
                 theme: "colored"
             });
-        }
+        //}
     }
     catch (error) {
         console.error("Error deleting image:", error);
