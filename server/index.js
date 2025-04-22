@@ -71,9 +71,8 @@ app.get("/fetchAllImages", async (req,res) => {
       const objPath = "photos/"+zuid;
       const stratus = obj.stratus();
       const bucket = stratus.bucket("photo-store-app");
-      var resp = await helperFunctions.listMyPaginatedObjects(bucket,objPath);
+      var resp = await helperFunctions.listMyObjects(bucket,objPath);
       console.log("fetchAllImages API ENDED...");
-      res.setHeader("X-Frame-Options", "SAMEORIGIN");
       res.json(resp);
   }
   catch(error)
@@ -185,7 +184,7 @@ app.get('/getSharedImages', async (req,res) => {
     const stratus = obj.stratus();
     const bucket = stratus.bucket("photo-store-app");
     const zcql = obj.zcql();
-    var resp = await helperFunctions.listSharedPaginatedObjects(bucket,objPath,zcql,zuid);
+    var resp = await helperFunctions.listSharedObjects(bucket,objPath,zcql,zuid);
     console.log("getSharedImages API ENDED...");
     res.json(resp);
   }

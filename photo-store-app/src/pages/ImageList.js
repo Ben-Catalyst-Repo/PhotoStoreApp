@@ -19,7 +19,7 @@ export default function ImageList({
     setSelectedUserIndex,
     userId
 }) {
-    const navigate = useNavigate();
+
     return (
         <div className="flex flex-col space-y-2">
             {currentImages.map((image, index) => (
@@ -36,17 +36,7 @@ export default function ImageList({
                         onClick={() => openPreview(image.object_url)}
                     >
                         <FiEye size={16} className="text-gray-600" />
-                    </button>
-
-                    {/* <button
-                        className="bg-white p-1 rounded-full shadow-md hover:bg-gray-100 mx-1"
-                        onClick={() => {
-                            handleDelete(image.key, setImageDetails, null, false);
-                            navigate("/upload", { state: { filePath: image.key, isShared: false } });
-                        }}
-                    >
-                        <FiEdit size={16} className="text-gray-600" />
-                    </button> */}
+                    </button>                    
 
                     <button
                         className="bg-white p-1 rounded-full shadow-md hover:bg-gray-100 mx-1"

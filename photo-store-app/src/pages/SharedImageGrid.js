@@ -12,7 +12,6 @@ export default function SharedImageGrid({ currentImages,
     openMenuIndex,
     openPreview
 }) {
-    const navigate = useNavigate();
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center">
@@ -33,19 +32,7 @@ export default function SharedImageGrid({ currentImages,
                         {openMenuIndex === index && (
                             <div className="absolute bottom-10 right-2 text-blue-600 bg-white border rounded shadow-lg w-32 text-sm z-50">
                                 {image.isEditAccess && (
-                                    <>
-                                        {/* <button
-                                            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                e.stopPropagation();
-                                                handleDelete(image.key, setImageDetails, setOpenMenuIndex, false);
-                                                navigate("/upload", { state: { filePath: image.key, isShared: true } });
-                                            }}
-                                        >
-                                            Update
-                                        </button> */}
-
+                                    <>                                        
                                         <button
                                             className="block w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100"
                                             onClick={(e) => {

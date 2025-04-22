@@ -1,9 +1,9 @@
 const sharp = require("sharp");
 
-async function listMyPaginatedObjects(bucket, prefix, isEdit = true) {
+async function listMyObjects(bucket, prefix, isEdit = true) {
     try
     {
-        console.log("listMyPaginatedObjects method STARTED...");
+        console.log("listMyObjects method STARTED...");
         
         const objects = await bucket.listPagedObjects({prefix:prefix});
     
@@ -22,14 +22,14 @@ async function listMyPaginatedObjects(bucket, prefix, isEdit = true) {
             result.push(imgInfo)
         }
         
-        console.log("listMyPaginatedObjects method ENDED...");
+        console.log("listMyObjects method ENDED...");
 
         return result;
     }
     
     catch(error)
     {
-        console.error("Error at listMyPaginatedObjects function: "+error);
+        console.error("Error at listMyObjects function: "+error);
     }
  }
 
@@ -56,7 +56,7 @@ async function uploadToStratus(bucket,inputPath,thumbnailPath,thumbnailName)
     }
 }
 
-async function listSharedPaginatedObjects(bucket, prefix, zcql,zuid) {
+async function listSharedObjects(bucket, prefix, zcql,zuid) {
     try
     {
         let query = `SELECT * FROM ImageShareDetails WHERE UserZuid = ${zuid}`;
@@ -73,7 +73,7 @@ async function listSharedPaginatedObjects(bucket, prefix, zcql,zuid) {
         let allSharedImages = [];
 
         for (const item of queryData) {
-            const result = await listMyPaginatedObjects(bucket, item.path, item.isEdit);
+            const result = await listMyObjects(bucket, item.path, item.isEdit);
             allSharedImages.push(result);
         }
 
@@ -89,7 +89,7 @@ async function listSharedPaginatedObjects(bucket, prefix, zcql,zuid) {
 
 
  module.exports = {
-    listMyPaginatedObjects,
+    listMyObjects,
     uploadToStratus,
-    listSharedPaginatedObjects
+    listSharedObjects
  };

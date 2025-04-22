@@ -10,7 +10,7 @@ export default function SharedImageList(
         setImageDetails,
         openPreview
     }) {
-    const navigate = useNavigate();
+    
     return (
         <div className="flex flex-col space-y-2">
             {currentImages.map((image) => (
@@ -27,19 +27,7 @@ export default function SharedImageList(
                     >
                         <FiEye size={16} className="text-gray-600" />
                     </button>
-
-                    {/* {image.isEditAccess && (
-                        <button
-                            className="bg-white p-1 rounded-full shadow-md hover:bg-gray-100 mx-1"
-                            onClick={() => {
-                                handleDelete(image.key, setImageDetails, null, false);
-                                navigate("/upload", { state: { filePath: image.key, isShared: true } });
-                            }}
-                        >
-                            <FiEdit size={16} className="text-gray-600" />
-                        </button>
-                    )} */}
-
+                    
                     <button
                         className="bg-white p-1 rounded-full shadow-md hover:bg-gray-100 mx-1"
                         onClick={() => handleDownload(image.key, null)}

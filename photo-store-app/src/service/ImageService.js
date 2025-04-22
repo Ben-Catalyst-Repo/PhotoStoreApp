@@ -58,34 +58,31 @@ export const handleDelete = async (imageKey, setImageDetails, setOpenMenuIndex, 
 
         await bucket.deleteObject(thumbnailPath);
 
-        //if (isDelete) {
-            var zcql = window.catalyst.ZCatalystQL;
+        var zcql = window.catalyst.ZCatalystQL;
 
-            var query = `DELETE FROM ImageShareDetails WHERE BucketPath = '${imageKey}'`;
+        var query = `DELETE FROM ImageShareDetails WHERE BucketPath = '${imageKey}'`;
 
-            console.log("QUERY: " + query);
+        console.log("QUERY: " + query);
 
-            var zcqlPromise = zcql.executeQuery(query);
-            await zcqlPromise
-                .then((response) => {
-                    console.log("ZCQL Response: " + JSON.stringify(response.content));
-                })
-                .catch((err) => {
-                    console.log("ZCQL Error: " + err);
-                });
+        var zcqlPromise = zcql.executeQuery(query);
+        
+        await zcqlPromise
+            .then((response) => {
+                console.log("ZCQL Response: " + JSON.stringify(response.content));
+            })
+            .catch((err) => {
+                console.log("ZCQL Error: " + err);
+            });
 
-            setImageDetails(prev => prev.filter(image => image.key !== imageKey));
-        //}
+        setImageDetails(prev => prev.filter(image => image.key !== imageKey));
 
         if (setOpenMenuIndex != null) {
             setOpenMenuIndex(null);
         }
 
-        //if (isDelete) {
-            toast.success("Image Deleted Successfully", {
-                theme: "colored"
-            });
-        //}
+        toast.success("Image Deleted Successfully", {
+            theme: "colored"
+        });
     }
     catch (error) {
         console.error("Error deleting image:", error);
