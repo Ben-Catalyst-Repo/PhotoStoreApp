@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FiX, FiList, FiGrid } from "react-icons/fi"; 
 import { fetchImages, handleDelete, handleDownload, fetchUsers, handleShareAction } from "../service/ImageService";
 import  ImageGrid from './ImageGrid';

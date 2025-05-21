@@ -43,7 +43,7 @@ export const fetchUsers = async (setUsers) => {
     }
 };
 
-export const handleDelete = async (imageKey, setImageDetails, setOpenMenuIndex, isDelete = true) => {
+export const handleDelete = async (imageKey, setImageDetails, setOpenMenuIndex) => {
     try {
         const stratus = window.catalyst.stratus;
         const bucket = stratus.bucket("photo-store-app");

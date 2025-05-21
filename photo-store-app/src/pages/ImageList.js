@@ -1,6 +1,5 @@
 import ImageThumbnail from '../service/ImageThumbnail';
-import { FiDownload, FiTrash2, FiEye, FiEdit, FiChevronRight, FiShare2 } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { FiDownload, FiTrash2, FiEye, FiChevronRight, FiShare2 } from "react-icons/fi";
 
 
 export default function ImageList({

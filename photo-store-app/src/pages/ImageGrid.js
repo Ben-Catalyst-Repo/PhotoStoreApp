@@ -1,7 +1,5 @@
-import React from "react";
 import { FiShare2, FiChevronRight, FiMoreVertical } from "react-icons/fi";
 import ImageThumbnail from "../service/ImageThumbnail";
-import { useNavigate } from "react-router-dom";
 
 export default function ImageGrid({
 

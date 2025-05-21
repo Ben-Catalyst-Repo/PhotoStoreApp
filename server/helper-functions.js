@@ -2,13 +2,9 @@ const sharp = require("sharp");
 
 async function listMyObjects(bucket, prefix, isEdit = true) {
     try
-    {
-        console.log("listMyObjects method STARTED...");
-        
+    {        
         const objects = await bucket.listPagedObjects({prefix:prefix});
     
-        console.log("objects :", objects)
-
         let result = [];
 
         for(let i = 0; i < objects.contents.length; i++)
@@ -22,8 +18,6 @@ async function listMyObjects(bucket, prefix, isEdit = true) {
             result.push(imgInfo)
         }
         
-        console.log("listMyObjects method ENDED...");
-
         return result;
     }
     
@@ -37,14 +31,12 @@ async function uploadToStratus(bucket,inputPath,thumbnailPath,thumbnailName)
 {
     try
     {
-        console.log("uploadToStratus method Started");
         const streamData = await sharp(inputPath)
                     .resize({ width: 150, height: 150 })  
                     .toFormat("jpeg", { quality: 70 }) 
                     .toBuffer();
-        console.log("ThumbnailPath: "+thumbnailPath);
-        console.log("ThumbnailName: "+thumbnailName);
-        const result = await bucket.putObject(thumbnailPath + thumbnailName + ".jpeg", streamData);
+
+                    const result = await bucket.putObject(thumbnailPath + thumbnailName + ".jpeg", streamData);
         console.log("uploadToStratus method Completed");
         return result;
     }
@@ -61,14 +53,11 @@ async function listSharedObjects(bucket, prefix, zcql,zuid) {
     {
         let query = `SELECT * FROM ImageShareDetails WHERE UserZuid = ${zuid}`;
         let result = await zcql.executeZCQLQuery(query);
-        console.log("Query Result: "+JSON.stringify(result));
         
         const queryData = result.map(item => ({
             path: item.ImageShareDetails.BucketPath,
             isEdit: item.ImageShareDetails.IsUpdate
         }));
-
-        console.log("Query Data: "+JSON.stringify(queryData));
 
         let allSharedImages = [];
 
@@ -77,7 +66,6 @@ async function listSharedObjects(bucket, prefix, zcql,zuid) {
             allSharedImages.push(result);
         }
 
-        console.log("ALL Images: "+allSharedImages);
         return allSharedImages;
     }
     catch(error)

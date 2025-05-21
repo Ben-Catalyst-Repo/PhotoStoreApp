@@ -1,5 +1,4 @@
 import ImageThumbnail from "../service/ImageThumbnail";
-import { useNavigate } from "react-router-dom";
 import { FiMoreVertical } from "react-icons/fi";
 
 

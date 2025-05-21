@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 
 export default function Upload({ userId }) {
     const [file, setFile] = useState(null);
-    //const [error, setError] = useState("");
     const [isUploading, setIsUploading] = useState(false);
 
     const navigate = useNavigate();
@@ -15,25 +14,10 @@ export default function Upload({ userId }) {
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         setFile(selectedFile);
-        // if (selectedFile) {
-            // const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
-            // if (!allowedTypes.includes(selectedFile.type)) {
-            //     setError("Only .png, .jpg, and .jpeg files are allowed.");
-            //     setFile(null);
-            //     return;
-            // }
-            // setError("");
-            
-        // }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // if (!file) {
-        //     setError("Please select a valid file.");
-        //     return;
-        // }
-
         try {
             setIsUploading(true);
             const stratus = window.catalyst.stratus;

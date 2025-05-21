@@ -26,13 +26,10 @@ app.post("/convertToThumbnailAndUpload", upload.single("image"), async (req, res
     const obj = catalyst.initialize(req, { scope: 'admin'});
     const stratus = obj.stratus();
     const bucket = stratus.bucket("photo-store-app");
-    
-    console.log("File name: "+req.file.originalname);
-    
+        
     const thumbnailName = req.file.originalname.substring(0, req.file.originalname.lastIndexOf(".")) ;
     
     const inputPath = req.file.path; 
-    console.log("Input File Path: "+inputPath);
     
     const zuid = req.body.id; 
     console.log("ID: "+zuid);
@@ -64,7 +61,6 @@ app.get("/fetchAllImages", async (req,res) => {
 
   try 
   {
-      console.log("fetchAllImages API STARTED...");
       const obj = catalyst.initialize(req);
       const zuid = req.query.id;
       console.log("ID: "+zuid);
@@ -72,7 +68,6 @@ app.get("/fetchAllImages", async (req,res) => {
       const stratus = obj.stratus();
       const bucket = stratus.bucket("photo-store-app");
       var resp = await helperFunctions.listMyObjects(bucket,objPath);
-      console.log("fetchAllImages API ENDED...");
       res.json(resp);
   }
   catch(error)
@@ -85,7 +80,6 @@ app.get("/fetchAllImages", async (req,res) => {
 app.get('/getAllUsers', async (req,res) => {
   try
   {
-      console.log("getAllUsers API Started");
       const app = catalyst.initialize(req);
       const userManagements = app.userManagement();
       let allUserPromise = userManagements.getAllUsers();
@@ -96,12 +90,10 @@ app.get('/getAllUsers', async (req,res) => {
       await allUserPromise.then(allUserDetails => 
       {
           details = allUserDetails;
-          console.log("All Users: "+JSON.stringify(allUserDetails)); 
       });
 
       await currentUserPromise.then(details => {
         currentUser = details.email_id;
-        console.log("Current User: "+currentUser);
       });
 
       const userDetails = details.map(id => ({
@@ -111,8 +103,6 @@ app.get('/getAllUsers', async (req,res) => {
       }));
 
       const otherUsers = userDetails.filter(user => user.mailId !== currentUser);
-
-      console.log(JSON.stringify("Users: "+JSON.stringify(otherUsers)));
 
       res.send(otherUsers);
   }
@@ -127,18 +117,13 @@ app.get('/getAllUsers', async (req,res) => {
 app.post('/shareDetails',async(req,res) => {
   try
   {
-    console.log("shareDetails API started");
     const app = catalyst.initialize(req);
     let zcql = app.zcql();
-
-    console.log(`BucketPath = '${req.body.imagePath}' AND UserZuid = '${req.body.zuid}`);
 
     let query = `SELECT COUNT(ImageShareDetails.BucketPath) FROM ImageShareDetails WHERE BucketPath = '${req.body.imagePath}' AND UserZuid = '${req.body.zuid}' `;
 
     let result = await zcql.executeZCQLQuery(query);
     let isPresent = result[0].ImageShareDetails["COUNT(BucketPath)"];
-
-    console.log("isPresent: "+isPresent);
 
     if(isPresent == 0)
     {
@@ -176,16 +161,13 @@ app.get('/getSharedImages', async (req,res) => {
   try
   {
   
-    console.log("getSharedImages API STARTED...");
     const obj = catalyst.initialize(req);
     const zuid = req.query.id;
-    console.log("ID: "+zuid);
     const objPath = "photos/"+zuid;
     const stratus = obj.stratus();
     const bucket = stratus.bucket("photo-store-app");
     const zcql = obj.zcql();
     var resp = await helperFunctions.listSharedObjects(bucket,objPath,zcql,zuid);
-    console.log("getSharedImages API ENDED...");
     res.json(resp);
   }
   catch(error)
@@ -198,10 +180,8 @@ app.get('/getSharedImages', async (req,res) => {
 app.get('/getSharedDetails', async (req,res) => {
   try
   {
-    console.log("getSharedDetails API STARTED...");
     const obj = catalyst.initialize(req);
     const zuid = req.query.id;
-    console.log("ID: "+zuid);
     
     let zcql = obj.zcql();
     let query = `SELECT * FROM ImageShareDetails WHERE SharedBy = '${zuid}'`;
@@ -215,8 +195,6 @@ app.get('/getSharedDetails', async (req,res) => {
         UserId: item.ImageShareDetails.UserZuid
     }));
 
-    console.log("SharedDetails result: "+JSON.stringify(result));
-    console.log("getSharedDetails API ENDED...");
     res.send(result);
   }
   catch(error)
@@ -229,7 +207,6 @@ app.get('/getSharedDetails', async (req,res) => {
 app.patch('/updateSharedDetails', async (req,res) => {
   try
   {
-    console.log("updateSharedDetails API STARTED...");
     const obj = catalyst.initialize(req);
     const isRevoke = req.body.RevokeAccess;
     const zuid = req.body.UserId;
@@ -237,7 +214,6 @@ app.patch('/updateSharedDetails', async (req,res) => {
     const bucketPath = req.body.BucketPath;
     
     let zcql = obj.zcql();
-    console.log(`ZUID: ${zuid} -- Bucket Path: ${bucketPath} -- isUpdate: ${isUpdate} -- IsRevoke: ${isRevoke}`);
     let query;
     
     if(isRevoke == "yes")
@@ -248,12 +224,8 @@ app.patch('/updateSharedDetails', async (req,res) => {
     {
         query = `UPDATE ImageShareDetails SET IsUpdate = ${isUpdate} WHERE UserZuid = '${zuid}' AND BucketPath = '${bucketPath}'`;
     }
-    
-    console.log("QUERY: "+query);
-    
+        
     let data = await zcql.executeZCQLQuery(query);
-    console.log("Update Details result: "+JSON.stringify(data));
-    console.log("updateSharedDetails API ENDED...");
     res.json({message:"Updated Successfully"});
   }
   catch(error)
