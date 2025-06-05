@@ -1,7 +1,7 @@
 'use strict'
 const express = require('express');
 const path = require('path');
-var catalyst = require('zcatalyst-sdk-node');
+let catalyst = require('zcatalyst-sdk-node');
 const multer = require("multer");
 
 const helperFunctions = require('./helper-functions');
@@ -67,7 +67,7 @@ app.get("/fetchAllImages", async (req,res) => {
       const objPath = "photos/"+zuid;
       const stratus = obj.stratus();
       const bucket = stratus.bucket("photo-store-app");
-      var resp = await helperFunctions.listMyObjects(bucket,objPath);
+      let resp = await helperFunctions.listMyObjects(bucket,objPath);
       res.json(resp);
   }
   catch(error)
@@ -167,7 +167,7 @@ app.get('/getSharedImages', async (req,res) => {
     const stratus = obj.stratus();
     const bucket = stratus.bucket("photo-store-app");
     const zcql = obj.zcql();
-    var resp = await helperFunctions.listSharedObjects(bucket,objPath,zcql,zuid);
+    let resp = await helperFunctions.listSharedObjects(bucket,objPath,zcql,zuid);
     res.json(resp);
   }
   catch(error)

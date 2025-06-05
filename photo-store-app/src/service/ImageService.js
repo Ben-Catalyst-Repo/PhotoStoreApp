@@ -58,13 +58,13 @@ export const handleDelete = async (imageKey, setImageDetails, setOpenMenuIndex) 
 
         await bucket.deleteObject(thumbnailPath);
 
-        var zcql = window.catalyst.ZCatalystQL;
+        let zcql = window.catalyst.ZCatalystQL;
 
-        var query = `DELETE FROM ImageShareDetails WHERE BucketPath = '${imageKey}'`;
+        let query = `DELETE FROM ImageShareDetails WHERE BucketPath = '${imageKey}'`;
 
         console.log("QUERY: " + query);
 
-        var zcqlPromise = zcql.executeQuery(query);
+        let zcqlPromise = zcql.executeQuery(query);
         
         await zcqlPromise
             .then((response) => {
