@@ -5,7 +5,7 @@ export default function ImageThumbnail({ imageUrl, listStyle }) {
     console.log("Image URL: "+imageUrl);
     const [thumbnail, setThumbnail] = useState(null);
 
-    const bucketUrl = "https://photo-store-app-development.zohostratus.com/";
+    const bucketUrl = "https://photo-store-app-development.zohostratus.in/";
 
     const pathParts = imageUrl.split("/"); 
     const fileName = pathParts.pop(); 
