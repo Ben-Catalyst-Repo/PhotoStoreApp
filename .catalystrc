@@ -10,17 +10,17 @@
   "projects": [
     {
       "idx": 1,
-      "id": "25458000000098216",
+      "id": "16332000000064033",
       "name": "PhotoStoreApp",
       "domain": {
-        "id": "10096436359",
-        "name": "photostoreapp-875932620.development"
+        "id": "50033523052",
+        "name": "photostoreapp-60041087212.development"
       },
       "timezone": "Asia/Kolkata",
       "env": [
         {
           "idx": 1,
-          "id": "875932620",
+          "id": "60041087212",
           "name": "Development",
           "type": 3
         }

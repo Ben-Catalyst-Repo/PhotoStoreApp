@@ -80,20 +80,29 @@ app.get("/fetchAllImages", async (req,res) => {
 app.get('/getAllUsers', async (req,res) => {
   try
   {
-      const app = catalyst.initialize(req);
+      const app = catalyst.initialize(req,{scope:"user"});
+      const appAdmin = catalyst.initialize(req,{scope:"admin"});
+      
+      const userManagementAdmin = appAdmin.userManagement();
       const userManagements = app.userManagement();
-      let allUserPromise = userManagements.getAllUsers();
+
+      let allUserPromise = userManagementAdmin.getAllUsers();
       let currentUserPromise = userManagements.getCurrentUser(); 
+
       let details;
       let currentUser;
 
       await allUserPromise.then(allUserDetails => 
       {
           details = allUserDetails;
+      }).catch(err => {
+        console.log("Error: "+err.message);
       });
 
       await currentUserPromise.then(details => {
         currentUser = details.email_id;
+      }).catch(err => {
+        console.log("Error: "+err.message);
       });
 
       const userDetails = details.map(id => ({

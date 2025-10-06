@@ -4,20 +4,20 @@ async function listMyObjects(bucket, prefix, isEdit = true) {
     try
     {        
         const objects = await bucket.listPagedObjects({prefix:prefix});
-    
         let result = [];
-
+        
         for(let i = 0; i < objects.contents.length; i++)
         {
-             const imgInfo = {
-                key: objects.contents[i].objectDetails.key,
-                object_url: objects.contents[i].objectDetails.object_url,
+            const objDetails = JSON.parse(objects.contents[i]);
+            const imgInfo = {
+                key: objDetails.key,
+                object_url: objDetails.object_url,
                 isEditAccess: isEdit
             }
 
             result.push(imgInfo)
         }
-        
+                
         return result;
     }
     
